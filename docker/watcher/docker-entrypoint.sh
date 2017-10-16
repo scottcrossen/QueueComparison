@@ -12,7 +12,9 @@ function finish {
 trap 'finish' SIGTERM
 
 function test {
-	echo -e "\nTesting Finished: All Tests Passed!"
+	echo -e "\nTesting Started."
+	make test
+	echo -e "\nTesting Finished."
 }
 
 if [ ! -f ./Makefile ]; then

@@ -9,7 +9,8 @@ BINDIR = bin
 SOURCEDIR = source
 RELDIR = rel
 COMP = gcc
-OBJS = $(TSH) ${RELDIR}/arrayqueue
+BINOBJS = ${BINDIR}/main.o ${BINDIR}/linkedqueue.o ${BINDIR}/arrayqueue.o ${BINDIR}/memorymappedqueue.o
+MAIN = ${RELDIR}/main
 COMPFLAGS = -Wall -O2
 LINKFLAGS =
 
@@ -20,20 +21,24 @@ LINKFLAGS =
 default: all
 
 .PHONY: all
-all: $(OBJS)
+all: $(MAIN)
 
 .PHONY: clean
 clean:
 	rm -rf $(BINDIR) $(RELDIR)
 
+.PHONY: test
+test:
+	./${MAIN}
+
 # ==== Targets ====
 
 .PRECIOUS: ${BINDIR}/%.o
-${BINDIR}/%.o: ${SOURCEDIR}/%.c
+${BINDIR}/%.o: ${SOURCEDIR}/%.c ${SOURCEDIR}/%.h
 	mkdir -p $(@D)
 	$(COMP) -c $< -o $@ $(COMPFLAGS)
 
 .PRECIOUS: ${RELDIR}/%
-${RELDIR}/%: ${BINDIR}/%.o
+${RELDIR}/%: ${BINOBJS}
 	mkdir -p $(@D)
 	$(COMP) $^ -o $@ $(LINKFLAGS)
