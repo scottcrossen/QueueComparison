@@ -4,16 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-linked_list_queue* createQueue() {
-	linked_list_queue* this = malloc(sizeof(linked_list_queue));
-  this->size = 0;
+linked_queue_t* createLinkedQueue() {
+	linked_queue_t* this = malloc(sizeof(linked_queue_t));
 	return this;
 }
 
-void destroyQueue(linked_list_queue* this) {
-  queue_node* current = this->head;
+void destroyLinkedQueue(linked_queue_t* this) {
+  queue_node_t* current = this->head;
   while (current != NULL) {
-    queue_node* next = current->next;
+    queue_node_t* next = current->next;
     free(current);
     current = next;
   }
@@ -21,24 +20,25 @@ void destroyQueue(linked_list_queue* this) {
   this = NULL;
 }
 
-void enqueue(linked_list_queue* this, char data) {
-  this->tail = malloc(sizeof(queue_node));
-  this->tail->value = data;
-  if (this->head == NULL) {
-    this->head = this->tail;
+void enqueueLinked(linked_queue_t* this, char data) {
+  queue_node_t* new = malloc(sizeof(queue_node_t));
+  new->value = data;
+  if (this->tail == NULL) {
+    this->head = new;
+    this->tail = new;
+  } else {
+    this->tail->next = new;
+    this->tail = this->tail->next;
   }
-  this->size++;
 }
 
-void dequeue(linked_list_queue* this, char* data) {
+void dequeueLinked(linked_queue_t* this, char* data) {
   if(this->head == NULL) {
     *data = 0;
     return;
   }
-  queue_node* to_pop = this->head;
-  this->head = this->head->next;
-  *data = to_pop->value;
-  free(to_pop);
-  to_pop = NULL;
-  this->size--;
+  *data = this->head->value;
+  queue_node_t* next = this->head->next;
+  free(this->head);
+  this->head = next;
 }

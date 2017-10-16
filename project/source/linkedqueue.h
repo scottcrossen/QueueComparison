@@ -1,20 +1,19 @@
 // @Copyright 2017 Scott Leland Crossen
 
-typedef struct queue_node {
-  char                value;
-  struct queue_node*  next;
-} queue_node;
+typedef struct queue_node_t {
+  char                  value;
+  struct queue_node_t*  next;
+} queue_node_t;
 
-typedef struct linked_list_queue {
-  queue_node*         head;
-  queue_node*         tail;
-  unsigned int        size;
-} linked_list_queue;
+typedef struct linked_queue_t {
+  queue_node_t*         head;
+  queue_node_t*         tail;
+} linked_queue_t;
 
-linked_list_queue* createQueue();
+linked_queue_t* createLinkedQueue();
 
-void destroyQueue(linked_list_queue* this);
+void destroyLinkedQueue(linked_queue_t* this);
 
-void enqueue(linked_list_queue* this, char data);
+void enqueueLinked(linked_queue_t* this, char data);
 
-void dequeue(linked_list_queue* this, char* data);
+void dequeueLinked(linked_queue_t* this, char* data);
