@@ -6,7 +6,7 @@ typedef struct array_queue_t {
   char*               array;
   unsigned int        head;
   unsigned int        tail;
-  unsigned int        size;
+  unsigned int        allocated;
   queue_status        status;
 } array_queue_t;
 

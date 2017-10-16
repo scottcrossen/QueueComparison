@@ -11,7 +11,7 @@ array_queue_t* createArrayQueue(unsigned int size) {
   this->array = malloc(sizeof(char) * size);
   this->head = 0;
   this->tail = 0;
-  this->size = size;
+  this->allocated = size;
   this->status = (size > 0) ? EMPTY : FULL;
   return this;
 }
@@ -26,36 +26,36 @@ void destroyArrayQueue(array_queue_t* this) {
 void enqueueArray(array_queue_t* this, char data) {
   if (this->status == FULL) resizeArray(this);
   this->status = READY;
-  *(this->array + (this->tail++ % this->size)) = data;
-  if (this->head % this->size == this->tail % this->size)
+  *(this->array + (this->tail++ % this->allocated)) = data;
+  if (this->head % this->allocated == this->tail % this->allocated)
     this->status = FULL;
 }
 
 void dequeueArray(array_queue_t* this, char* data) {
   if (this->status == EMPTY) { *data = 0; return; }
   this->status = READY;
-  *data = *(this->array + (this->head++ % this->size));
-  if (this->head % this->size == this->tail % this->size)
+  *data = *(this->array + (this->head++ % this->allocated));
+  if (this->head % this->allocated == this->tail % this->allocated)
     this->status = EMPTY;
 }
 
 void resizeArray(array_queue_t* this) {
-  if (this->size == 0) {
+  if (this->allocated == 0) {
     free(this->array);
     this->array = malloc(sizeof(char));
-    this->size = 1;
+    this->allocated = 1;
     this->tail = 0;
     this->status = EMPTY;
   } else {
-    char* new_array = malloc(sizeof(char) * this->size * 2);
+    char* new_array = malloc(sizeof(char) * this->allocated * 2);
     char* temp_ptr = new_array;
     do {
-      *temp_ptr++ = *(this->array + (this->head++ % this->size));
-    } while(this->head % this->size != this->tail % this->size);
+      *temp_ptr++ = *(this->array + (this->head++ % this->allocated));
+    } while(this->head % this->allocated != this->tail % this->allocated);
     free(this->array);
     this->array = new_array;
-    this->tail = this->size;
-    this->size = this->size * 2;
+    this->tail = this->allocated;
+    this->allocated = this->allocated * 2;
     this->status = READY;
   }
   this->head = 0;

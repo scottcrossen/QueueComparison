@@ -8,9 +8,10 @@ typedef struct queue_node_t {
 typedef struct linked_queue_t {
   queue_node_t*         head;
   queue_node_t*         tail;
+  struct queue_node_t*  allocated;
 } linked_queue_t;
 
-linked_queue_t* createLinkedQueue();
+linked_queue_t* createLinkedQueue(unsigned int size);
 
 void destroyLinkedQueue(linked_queue_t* this);
 

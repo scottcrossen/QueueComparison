@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-linked_queue_t* createLinkedQueue() {
+linked_queue_t* createLinkedQueue(unsigned int size) {
 	linked_queue_t* this = malloc(sizeof(linked_queue_t));
+  /*this->allocated = malloc(sizeof(queue_node_t) * size);
+  while (this->allocated)*/
 	return this;
 }
 
