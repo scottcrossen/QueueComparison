@@ -3,16 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "linkedqueue.h"
+#include <unistd.h>
 #include "arrayqueue.h"
+#include "linkedqueue.h"
 #include "mmqueue.h"
 
 int main(int argc, char **argv) {
   printf("%s\r\n", "****************");
   printf("%s\r\n", "Program starting");
-  linked_queue_t* linked_queue = createLinkedQueue();
-  array_queue_t* array_queue = createArrayQueue(2);
-  mm_queue_t* mm_queue = createMMQueue(2);
+  linked_queue_t* linked_queue = createLinkedQueue(1/*getpagesize()*/);
+  array_queue_t* array_queue = createArrayQueue(1/*getpagesize()*/);
+  mm_queue_t* mm_queue = createMMQueue(getpagesize());
   printf("%s\r\n", "Queues created");
 
 
@@ -35,6 +36,7 @@ int main(int argc, char **argv) {
   dequeueMM(mm_queue, &a); printf("%c\r\n", a);
   dequeueMM(mm_queue, &a); printf("%c\r\n", a);
   dequeueMM(mm_queue, &a); printf("%c\r\n", a);
+  dequeueMM(mm_queue, &a); printf("%c\r\n", a);
 
 
   printf("%s\r\n", "Deleting queues");
@@ -46,7 +48,7 @@ int main(int argc, char **argv) {
 }
 
 
-double when() {
+double now() {
     struct timeval tp;
     gettimeofday(&tp, NULL);
     return ((double) tp.tv_sec + (double) tp.tv_usec * 1e-6);

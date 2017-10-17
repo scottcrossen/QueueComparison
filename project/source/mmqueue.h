@@ -1,6 +1,12 @@
 // @Copyright 2017 Scott Leland Crossen
 
 typedef struct mm_queue_t {
+  int               file_descriptor;
+  char*             buffer;
+  unsigned int      head;
+  unsigned int      tail;
+  unsigned int      size;
+  unsigned int      allocated;
 } mm_queue_t;
 
 mm_queue_t* createMMQueue(unsigned int size);

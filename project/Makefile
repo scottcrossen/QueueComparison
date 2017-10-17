@@ -12,7 +12,7 @@ COMP = gcc
 BINOBJS = ${BINDIR}/main.o ${BINDIR}/linkedqueue.o ${BINDIR}/arrayqueue.o ${BINDIR}/mmqueue.o
 MAIN = ${RELDIR}/main
 COMPFLAGS = -Wall -O2
-LINKFLAGS =
+LINKFLAGS = -lrt
 
 # ==== Recipes ====
 
