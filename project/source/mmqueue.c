@@ -66,6 +66,7 @@ void dequeueMM(mm_queue_t* this, char* data) {
 }
 
 void resizeMM(mm_queue_t* this) {
+  printf("Warning: Resizing queue.");
   int obj_size = sizeof(char);
   unsigned int new_size = this->size * 2 * obj_size;
   if (new_size >= this->allocated / sizeof(char)) {

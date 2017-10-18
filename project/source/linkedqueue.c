@@ -53,12 +53,18 @@ void dequeueLinked(linked_queue_t* this, char* data) {
     return;
   }
   *data = this->head->value;
-  this->allocated->next = this->head;
-  this->head = (this->head == this->tail) ? NULL : this->head->next;
+  if (this->head == this->tail) {
+    this->head = NULL;
+  } else {
+    this->allocated->next = this->head;
+    this->allocated = this->allocated->next;
+    this->head = this->head->next;
+  }
   this->allocated->next = NULL;
 }
 
 void resizeLinked(linked_queue_t* this) {
+  printf("Warning: Resizing queue.\r\n");
   queue_node_t* new = malloc(sizeof(queue_node_t));
   if (this->allocated == NULL) {
     this->allocated = new;

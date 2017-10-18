@@ -40,6 +40,7 @@ void dequeueArray(array_queue_t* this, char* data) {
 }
 
 void resizeArray(array_queue_t* this) {
+  printf("Warning: Resizing queue.");
   if (this->allocated == 0) {
     free(this->array);
     this->array = malloc(sizeof(char));
