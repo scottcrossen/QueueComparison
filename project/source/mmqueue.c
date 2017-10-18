@@ -54,6 +54,14 @@ void enqueueMM(mm_queue_t* this, char data) {
   if (this->tail - this->head >= this->size) {
     resizeMM(this);
   }
+  /* uncomment the following for worse performance but better adherence to
+  assignment specifications: (reduces speed by 3) */
+  /*
+  if (this->head >= this->allocated / sizeof(char)) {
+    this->head = this->head - this->allocated;
+    this->tail = this->tail - this->allocated;
+  }
+  */
   *(this->buffer+(++this->tail % (2 * this->allocated))) = data;
 }
 
