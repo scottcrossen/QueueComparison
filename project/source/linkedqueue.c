@@ -112,16 +112,16 @@ void dequeueLinked(linked_queue_t* this, char* data) {
 
 int handleLinkedEmpty(linked_queue_t* this) {
   switch (this->empty_behavior) {
-    case EWAIT:
+    case EMPTY_WAIT:
       printf("Queue empty: Waiting for data before removing\r\n");
       while(this->head == NULL) {
         pthread_cond_wait(&this->writeable, &this->lock);
       }
       return 0;
-    case EIGNORE:
+    case EMPTY_IGNORE:
       printf("Queue empty: Returning null\r\n");
       return -1;
-    case EABORT:
+    case EMPTY_ABORT:
       printf("Queue empty: Aborting\r\n");
       fprintf(stderr, "queue empty\r\n");
       abort();
@@ -133,20 +133,20 @@ int handleLinkedEmpty(linked_queue_t* this) {
 
 int handleLinkedFull(linked_queue_t* this) {
   switch (this->full_behavior) {
-    case FRESIZE:
+    case FULL_RESIZE:
       printf("Queue full: Resizing queue\r\n");
       resizeLinked(this);
       return 0;
-    case FWAIT:
+    case FULL_WAIT:
       printf("Queue full: Waiting for space before adding\r\n");
       while (this->tail == this->allocated) {
         pthread_cond_wait(&this->writeable, &this->lock);
       }
       return 0;
-    case FIGNORE:
+    case FULL_IGNORE:
       printf("Queue full: Dropping added data\r\n");
       return -1;
-    case FABORT:
+    case FULL_ABORT:
       printf("Queue full: Aborting\r\n");
       fprintf(stderr, "queue full\r\n");
       abort();
