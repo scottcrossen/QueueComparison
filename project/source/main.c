@@ -20,9 +20,9 @@ int main(int argc, char **argv) {
   double before;
   double after;
   unsigned int multiplier = 20;
-  linked_queue_t* linked_queue = createLinkedQueue(page_size);
-  array_queue_t* array_queue = createArrayQueue(page_size);
-  mm_queue_t* mm_queue = createMMQueue(page_size);
+  linked_queue_t* linked_queue = createLinkedQueue(page_size, FIGNORE, EIGNORE);
+  array_queue_t* array_queue = createArrayQueue(page_size, FIGNORE, EIGNORE);
+  mm_queue_t* mm_queue = createMMQueue(page_size, FIGNORE, EIGNORE);
   printf("Queues created\r\n");
   printf("Testing linked list queue\r\n");
   before = now();
