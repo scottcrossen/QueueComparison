@@ -5,11 +5,11 @@
 
 BYUNETID = slxn42
 VERSION = 1
-BINDIR = bin
+TMPDIR = tmp
 SOURCEDIR = source
 RELDIR = rel
 COMP = gcc
-BINOBJS = ${BINDIR}/main.o ${BINDIR}/linkedqueue.o ${BINDIR}/arrayqueue.o ${BINDIR}/mmqueue.o
+BINOBJS = ${TMPDIR}/main.o ${TMPDIR}/linkedqueue.o ${TMPDIR}/arrayqueue.o ${TMPDIR}/mmqueue.o
 MAIN = ${RELDIR}/main
 COMPFLAGS = -Wall -O2
 LINKFLAGS = -lrt
@@ -25,7 +25,7 @@ all: $(MAIN)
 
 .PHONY: clean
 clean:
-	rm -rf $(BINDIR) $(RELDIR)
+	rm -rf $(TMPDIR) $(RELDIR)
 
 .PHONY: test
 test:
@@ -33,8 +33,8 @@ test:
 
 # ==== Targets ====
 
-.PRECIOUS: ${BINDIR}/%.o
-${BINDIR}/%.o: ${SOURCEDIR}/%.c ${SOURCEDIR}/%.h
+.PRECIOUS: ${TMPDIR}/%.o
+${TMPDIR}/%.o: ${SOURCEDIR}/%.c ${SOURCEDIR}/%.h
 	mkdir -p $(@D)
 	$(COMP) -c $< -o $@ $(COMPFLAGS)
 
