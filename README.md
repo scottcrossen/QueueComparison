@@ -9,6 +9,10 @@ makefile provides functionality to compile the multi-build project into a single
 
 It is written and maintained by Scott Leland Crossen.
 
+### Important Note
+
+I fixed some bugs related to the linked-list implementation of this project. However, these changes were lost due to various reasons. Therefore, some of the functionality may be perfunctory until I revisit the project again.
+
 ### Contributors
 
 1. Scott Leland Crossen  
